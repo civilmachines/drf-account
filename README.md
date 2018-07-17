@@ -25,7 +25,7 @@ Download and Install via `easy_install`
 ```
 easy_install drf_account
 ```
-- Add `drf_user` in `INSTALLED_APPS`<br>
+- Add `drf_account` in `INSTALLED_APPS`<br>
 ```
 INSTALLED_APPS = [
     ...
