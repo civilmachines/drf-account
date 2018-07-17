@@ -4,14 +4,14 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="drf_user",
-    version=__import__('drf_user').__version__,
-    author=__import__('drf_user').__author__,
+    name="drf_account",
+    version=__import__('drf_account').__version__,
+    author=__import__('drf_account').__author__,
     author_email="pypidev@civilmachines.com",
     description="Accounts APP for Django REST Framework with API Views",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    license=__import__('drf_user').__license__,
+    license=__import__('drf_account').__license__,
     url="https://github.com/civilmachines/drf-account",
     python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*",
     packages=setuptools.find_packages(),
