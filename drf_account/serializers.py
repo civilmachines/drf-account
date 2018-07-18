@@ -74,3 +74,21 @@ class ShowCreditCardSerializer(ShowDebitCardSerializer):
         model = CreditCard
         fields = ('id', 'nickname', 'bank', 'description', 'account', 'vendor', 'statement_date', 'limit',
                   'duedate_duration')
+
+
+class UpdateBankAccountSerializer(serializers.ModelSerializer):
+    """
+    It is a model serializer to update a bank account detail.
+    """
+    from .models import BankMaster
+
+    nickname = serializers.CharField(required=False)
+    bank = serializers.PrimaryKeyRelatedField(required=False, queryset=BankMaster.objects.all())
+    description = serializers.CharField(required=False)
+    accnumber = serializers.CharField(required=False)
+    minbal = serializers.IntegerField(required=False)
+
+    class Meta:
+        from .models import BankAccount
+        model = BankAccount
+        fields = ('nickname', 'bank', 'description', 'accnumber', 'minbal')

@@ -1,4 +1,4 @@
-from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView
 
 
 def get_bank_by_name(name):
@@ -39,7 +39,7 @@ class ShowBankAccountView(ListAPIView):
     from .models import BankAccount
 
     serializer_class = ShowBankAccountSerializer
-    queryset = BankAccount.objects.all()
+    queryset = BankAccount.objects.all().order_by('id')
 
 
 class AddDebitCardView(CreateAPIView):
@@ -81,7 +81,7 @@ class ShowDebitCardView(ListAPIView):
     from .models import DebitCard
 
     serializer_class = ShowDebitCardSerializer
-    queryset = DebitCard.objects.all()
+    queryset = DebitCard.objects.all().order_by('id')
 
 
 class AddCreditCardView(AddDebitCardView):
@@ -95,7 +95,7 @@ class ShowCreditCardView(ListAPIView):
     from .models import CreditCard
 
     serializer_class = ShowCreditCardSerializer
-    queryset = CreditCard.objects.all()
+    queryset = CreditCard.objects.all().order_by('id')
 
 
 class ShowBankView(ListAPIView):
@@ -104,5 +104,16 @@ class ShowBankView(ListAPIView):
     from django_filters.rest_framework.backends import DjangoFilterBackend
 
     serializer_class = ShowBankSerializer
-    queryset = BankMaster.objects.all()
+    queryset = BankMaster.objects.all().order_by('id')
     filter_backends = (DjangoFilterBackend, )
+
+
+class UpdateBankAccountView(UpdateAPIView):
+    """
+    This view is to update bank account details.
+    """
+    from .models import BankAccount
+    from .serializers import UpdateBankAccountSerializer
+
+    queryset = BankAccount.objects.all()
+    serializer_class = UpdateBankAccountSerializer
