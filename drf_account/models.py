@@ -4,6 +4,9 @@ from django.utils.text import gettext_lazy as _
 
 
 class BankMaster(CreateUpdateModel):
+    """
+    This is a custom BankMaster model that keeps a record of all the banks.
+    """
     name = models.CharField(_('Bank Name'), max_length=254, unique=True)
     aliases = models.TextField(_('Aliases of Bank Name'), null=True, blank=False)
 
@@ -24,6 +27,9 @@ class BankMaster(CreateUpdateModel):
 
 
 class BankAccount(CreateUpdateModel):
+    """
+    This is a custom BankAccount model that keeps a record of all the bank details.
+    """
     nickname = models.CharField(_('Nick Name'), max_length=250)
     bank = models.ForeignKey(BankMaster, on_delete=models.PROTECT)
     description = models.TextField(_('Description'), null=True)
@@ -37,6 +43,9 @@ class BankAccount(CreateUpdateModel):
 
 
 class Card(CreateUpdateModel):
+    """
+    This is a custom Card model that keeps a record of all the Card details.
+    """
     nickname = models.CharField(_('Nick Name'), max_length=250)
     bank = models.ForeignKey(BankMaster, on_delete=models.PROTECT)
     description = models.TextField(_('Description'), null=True)
@@ -53,6 +62,10 @@ class Card(CreateUpdateModel):
 
 
 class CreditCard(Card):
+    """
+    This is a custom Card model that keeps a record of all the credit card details.
+    It has a foreign key linking to card.
+    """
     from django.core.validators import MinValueValidator, MaxValueValidator
 
     limit = models.DecimalField(_('Limit on Card'), max_digits=50, decimal_places=5)
@@ -70,6 +83,10 @@ class CreditCard(Card):
 
 
 class DebitCard(Card):
+    """
+    This is a custom Card model that keeps a record of all the debit card details.
+    It has a foreign key linking to card.
+    """
     free_atmtransaction = models.IntegerField(_('Free ATM Transaction'), default=10)
     free_own_atmtransaction = models.IntegerField(_('Free Own ATM Transaction'), default=5)
 

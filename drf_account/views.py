@@ -2,6 +2,25 @@ from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView
 
 
 def get_bank_by_name(name):
+    """
+    This function checks if the bank exists in the database or not.
+    Parameters
+    ----------
+    name: str
+
+    Returns
+    -------
+    str
+        The name of the bank if it exists otherwise None.
+    Examples
+    --------
+    To check if 'Axis Bank' bank is already present in Database or not.
+    >>> print(get_bank_by_name('Axis Bank'))
+    Axis Bank
+    To check if 'Central Bank' bank is already present in Database or not.
+    >>> print(get_bank_by_name('Central Bank'))
+    None
+    """
     from .models import BankMaster
     bmall = BankMaster.objects.all()
     try:
@@ -16,6 +35,9 @@ def get_bank_by_name(name):
 
 
 class AddBankAccountView(CreateAPIView):
+    """
+    This view will allow the user to add a new bank account.
+    """
     from .serializers import AddBankAccountSerializer
 
     serializer_class = AddBankAccountSerializer
@@ -35,6 +57,9 @@ class AddBankAccountView(CreateAPIView):
 
 
 class ShowBankAccountView(ListAPIView):
+    """
+    This view will show the list of all bank account details.
+    """
     from .serializers import ShowBankAccountSerializer
     from .models import BankAccount
 
@@ -43,6 +68,9 @@ class ShowBankAccountView(ListAPIView):
 
 
 class AddDebitCardView(CreateAPIView):
+    """
+    This view will allow the user to add a new debit card.
+    """
     from .serializers import AddDebitCardSerializer
 
     serializer_class = AddDebitCardSerializer
@@ -77,6 +105,9 @@ class AddDebitCardView(CreateAPIView):
 
 
 class ShowDebitCardView(ListAPIView):
+    """
+    This view will show the list of all debit cards.
+    """
     from .serializers import ShowDebitCardSerializer
     from .models import DebitCard
 
@@ -85,12 +116,18 @@ class ShowDebitCardView(ListAPIView):
 
 
 class AddCreditCardView(AddDebitCardView):
+    """
+    This view will allow the user to add a new credit card.
+    """
     from .serializers import AddCreditCardSerializer
 
     serializer_class = AddCreditCardSerializer
 
 
 class ShowCreditCardView(ListAPIView):
+    """
+    This view will show the list of all credit cards.
+    """
     from .serializers import ShowCreditCardSerializer
     from .models import CreditCard
 
@@ -99,6 +136,9 @@ class ShowCreditCardView(ListAPIView):
 
 
 class ShowBankView(ListAPIView):
+    """
+    This view will show the list of all the banks.
+    """
     from .serializers import ShowBankSerializer
     from .models import BankMaster
     from django_filters.rest_framework.backends import DjangoFilterBackend
@@ -114,6 +154,36 @@ class UpdateBankAccountView(UpdateAPIView):
     """
     from .models import BankAccount
     from .serializers import UpdateBankAccountSerializer
+    from django_filters.rest_framework.backends import DjangoFilterBackend
 
     queryset = BankAccount.objects.all()
     serializer_class = UpdateBankAccountSerializer
+    filter_backends = (DjangoFilterBackend, )
+
+
+class UpdateDebitCardView(UpdateAPIView):
+    """
+    This view is to update debit card details.
+    """
+    from .models import DebitCard
+    from .serializers import UpdateDebitCardSerializer
+    from django_filters.rest_framework.backends import DjangoFilterBackend
+
+    queryset = DebitCard.objects.all()
+    serializer_class = UpdateDebitCardSerializer
+    filter_backends = (DjangoFilterBackend, )
+
+
+class UpdateCreditCardView(UpdateAPIView):
+    """
+    This view is to update Credit card details.
+    """
+    from .models import CreditCard
+    from .serializers import UpdateCreditCardSerializer
+    from django_filters.rest_framework.backends import DjangoFilterBackend
+    from drfaddons.serializer import IsOwnerFilterBackend
+
+    queryset = CreditCard.objects.all()
+    serializer_class = UpdateCreditCardSerializer
+    filter_backends = (DjangoFilterBackend, IsOwnerFilterBackend)
+
