@@ -64,7 +64,7 @@ class ShowBankAccountView(ListAPIView):
     from .models import BankAccount
 
     serializer_class = ShowBankAccountSerializer
-    queryset = BankAccount.objects.all().order_by('id')
+    queryset = BankAccount.objects.all().order_by('-create_date')
 
 
 class AddDebitCardView(CreateAPIView):
@@ -112,7 +112,7 @@ class ShowDebitCardView(ListAPIView):
     from .models import DebitCard
 
     serializer_class = ShowDebitCardSerializer
-    queryset = DebitCard.objects.all().order_by('id')
+    queryset = DebitCard.objects.all().order_by('-create_date')
 
 
 class AddCreditCardView(AddDebitCardView):
@@ -132,7 +132,7 @@ class ShowCreditCardView(ListAPIView):
     from .models import CreditCard
 
     serializer_class = ShowCreditCardSerializer
-    queryset = CreditCard.objects.all().order_by('id')
+    queryset = CreditCard.objects.all().order_by('-create_date')
 
 
 class ShowBankView(ListAPIView):
@@ -144,7 +144,7 @@ class ShowBankView(ListAPIView):
     from django_filters.rest_framework.backends import DjangoFilterBackend
 
     serializer_class = ShowBankSerializer
-    queryset = BankMaster.objects.all().order_by('id')
+    queryset = BankMaster.objects.all().order_by('-create_date')
     filter_backends = (DjangoFilterBackend, )
 
 
@@ -181,7 +181,7 @@ class UpdateCreditCardView(UpdateAPIView):
     from .models import CreditCard
     from .serializers import UpdateCreditCardSerializer
     from django_filters.rest_framework.backends import DjangoFilterBackend
-    from drfaddons.serializer import IsOwnerFilterBackend
+    from drfaddons.filters import IsOwnerFilterBackend
 
     queryset = CreditCard.objects.all()
     serializer_class = UpdateCreditCardSerializer
